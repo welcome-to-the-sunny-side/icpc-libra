@@ -1,7 +1,6 @@
 template<typename T> 
 void __print(const T& x) {cerr << x;}  // handles all numeric types and strings
 void __print(char x) {cerr << '\'' << x << '\'';}
-void __print(const string &x) {cerr << '\"' << x << '\"';}
 void __print(bool x) {cerr << (x ? "true" : "false");}
 
 template<typename T, typename V>
