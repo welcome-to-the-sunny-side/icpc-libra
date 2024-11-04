@@ -8,6 +8,11 @@ void __print(const T& x) {
     }
 }
 
+template<typename T, typename V>
+void __print(const pair<T, V> &x) {
+    cerr << '{', __print(x.first), cerr << ", ", __print(x.second), cerr << '}';
+}
+
 template <typename... A>
 void _print(const A&... a) {((__print(a), cerr << ", "), ...);}
 
