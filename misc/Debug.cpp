@@ -1,14 +1,10 @@
 template<typename T> 
 void __print(const T& x) {
     cerr << '{';
-    if constexpr (requires {x.size();} and !is_same_v<T, string>){
-        int f = 0;
-        for(auto i : x) cerr << (f ++ ? "," : ""), __print(i);
-    }
-    else if constexpr (requires {x.first;})
-        __print(x.first), cerr << ',', __print(x.second);
-    else
-        cerr << x;
+    if constexpr (requires {x.size();} and !is_same_v<T, string>)
+        for(auto i : x) __print(i), cerr << ',';
+    else if constexpr (requires {x.first;}) __print(x.first), cerr << ',', __print(x.second);
+    else    cerr << x;
     cerr << '}';
 }
 
