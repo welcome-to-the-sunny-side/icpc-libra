@@ -1,19 +1,17 @@
 template<typename T> 
 void __print(const T& x) {
     cerr << '{';
-    if constexpr (requires {x.size();} and !is_same_v<T, string>)
-        for(auto i : x) __print(i), cerr << ',';
-    else if constexpr (requires {x.first;}) __print(x.first), cerr << ',', __print(x.second);
+    if constexpr (requires { x.size(); } && !is_same_v<T, string>)
+        for (auto i : x) __print(i), cerr << ',';
+    else if constexpr (requires { x.first; })
+        __print(x.first), cerr << ',', __print(x.second);
     else    cerr << x;
     cerr << '}';
 }
 
-void _print() {cerr << "]\n";}
-template <typename T, typename... V>
-void _print(T t, V... v) {
-    __print(t);
-    if (sizeof...(v)) cerr << ", "; 
-    _print(v...);
+template <typename... Args>
+void _print(const Args&... args) {
+    ((__print(args), cerr << ", "), ...);
 }
 
-#define debug(x...) cerr << "[" << #x << "] = ["; _print(x)
+#define debug(...) cerr << "[" << #__VA_ARGS__ << "] = ["; _print(__VA_ARGS__); cerr << "]\n";
