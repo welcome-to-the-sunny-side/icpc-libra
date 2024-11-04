@@ -1,7 +1,7 @@
 template<typename T> 
 void __print(const T& x) {
     cerr << '{';
-    if constexpr (requires { x.begin(); } && !requires { x.c_str(); })
+    if constexpr (requires { x.size(); } && !requires { x.length(); })
         for (auto i : x) __print(i), cerr << ',';
     else if constexpr (requires { x.first; })
         __print(x.first), cerr << ',', __print(x.second);
