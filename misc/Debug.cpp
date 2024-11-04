@@ -3,7 +3,7 @@ void __print(const T& x) {
     if constexpr (is_arithmetic_v<T> or is_same_v<T, string>)   cerr << x;
     else {
         cerr << '{';
-        for(auto i : x) __print(i), cerr << ',';
+        int f = 0; for(auto i : x) cerr << (f ++ ? ", " : ""), __print(i);
         cerr << '}';
     }
 }
