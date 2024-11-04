@@ -1,8 +1,8 @@
 template<typename T> 
 void __print(const T& x) {
-    if constexpr (is_arithmetic_v<T>)
+    if constexpr (is_arithmetic_v<T> or is_same_v<T, string>)
         cerr << x;
-    else{
+    else {
         cerr << '{';
         for(auto i : x)
             __print(i), cerr << ',';
