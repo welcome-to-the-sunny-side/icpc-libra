@@ -1,12 +1,13 @@
 template<typename T> 
 void __print(const T& x) {
-    cerr << '{';
-    if constexpr (requires { x.size(); } && !requires { x.length(); })
+    if constexpr (requires { x.size(); } && !requires { x.length(); }) {
+        cerr << '{';
         for (auto i : x) __print(i), cerr << ',';
+        cerr << '}';
+    }
     else if constexpr (requires { x.first; })
-        __print(x.first), cerr << ',', __print(x.second);
+        cerr << '{', __print(x.first), cerr << ',', __print(x.second), cerr << '}';
     else    cerr << x;
-    cerr << '}';
 }
 
 template <typename... Args>
