@@ -1,7 +1,7 @@
 template<typename T>
 void __p(const T& x);
-template<typename X, typename Y>
-void __p(const pair<X, Y>& x){
+template<typename A, typename B>
+void __p(const pair<A, B>& x){
     cerr << '{', __p(x.first), cerr << ", ", __p(x.second), cerr << '}';
 }
 template<typename T> 
