@@ -1,4 +1,5 @@
 ICPC library for team "whitepilled again"
 
 todo:
-- fft
+- 2d fenwick?
+- shorten convex hull trick template
