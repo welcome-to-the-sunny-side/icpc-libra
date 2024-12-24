@@ -1,12 +1,10 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-#ifdef natural_selection
-#include "../libra/misc/dbg.h"
-#else
-#define debug(...)
+#pragma GCC optimize("O3,unroll-loops")
+#pragma GCC target("avx2,bmi,bmi2,lzcnt,popcnt")
+
 #define endl "\n"
-#endif
 
 signed main()
 {
@@ -15,6 +13,5 @@ signed main()
     cin >> t;
     while(t --)
     {
-        {{CURSOR}}
     }
 }
