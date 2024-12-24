@@ -6,6 +6,7 @@ using namespace std;
 #define endl "\n"
 
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+mt19937_64 rng64(chrono::steady_clock::now().time_since_epoch().count());
 
 signed main()
 {
@@ -14,5 +15,6 @@ signed main()
     cin >> t;
     while(t --)
     {
+
     }
 }
