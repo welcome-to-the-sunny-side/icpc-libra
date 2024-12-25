@@ -180,34 +180,37 @@ until St is empty
     put the second end of this edge in St;
 
 ---
-// Shlok
-#define __ freopen("input.txt", "r", stdin); freopen("output.txt", "w", stdout);
-/* Euler Totient- phi(p^k) = p^k - p^(k-1)
-phi(ab) = phi(a)*phi(b)*g/phi(g), where g = gcd
-sum over all divisors d of n (phi(d)) = n
-Fermats Little Theorem / Eulers Generalization= a^(phi(n))=1(modn). (phi(n)=n-1 for prime)
-ax = bmodn has solution if g (gcd(a, n)) | b -> a/g * x = b/g mod (n/g) (consider a' b' n')
-solution: x' = b' * (a')^-1 mod (n') -> x = (x' + i * n') (mod n) for i = 0, 1,..., g-1
-nCk = n-1Ck-1 + n-1Ck, sum m=0 to n (mCk) = n+1Ck+1
-sum k=0 to m (n+kCk) = m+n+1Cm; nC0 + n-1C1 + ... + n-kCk + ... + 0Cn = Fn+1 (fib)
-no. of paths by which we can reach from (1, 1) to (n, m)=(n+m-2)C(n-1) 
-x+y = x^y + 2(x&y) = (x|y) + (x&y)
-Catalan: Cn = 1/(n+1) * (2n)Cn
-Convolution: Find the count of balanced parentheses sequences consisting of 𝑛+𝑘 pairs of parentheses where the first 𝑘 symbols are open brackets. 
-C(k, n)=(k + 1) / (n + k + 1) * (2 * n + k) C (n)
-Mobius:
-a) u(n)=1 if n is a square-free positive integer with an even number of prime factors.
-b) u(n)=−1 if n is a square-free positive integer with an odd number of prime factors.
-c) u(n)=0 if nn has a squared prime factor.
-d|n sigma (​u(d))=1 if n = 1, 0 if n > 1, -> because (1 * (conv) u) = delta (identity, as described above)
-f and g be multiplicative functions f(n) = sigma(d|n) (g(d)) for all n. Then
-g(n)=sigma(d|n) (u(d)f(n/d)) = sigma(d|n) (u(n/d)f(d))
-f(n) = sum i = 1 to n (sum j = 1 to n ([gcd(i,j) ==1]))
-= sum i = 1 to n (sum j = 1 to n (sum d | gcd(i,j)(u(d))))
-= same (sum d = 1 to n ([d | gcd(i,j)] u(d)) = same ([d|i][d|j]u(d))
-= sum d = 1 to n u(d) * (sum i=1 to n([d|i])) *(sum i=1 to n([d|i])) 
-= sum d=1 to n (u(d) * (n/d (floor))^2
-f(n) = sum i = 1 to n (sum j = 1 to n (gcd(i,j)))
-= sum k=1 to n(same([gcd(i,j)==k]), now i=ak, j=bk
-= sum k=1 to n(sum a=1 to n/k(floor) (sum b=1 to n/k([gcd(a,b) == 1]))))
+//Random Results
+/*
+"Konigs Theorem": In a bipartite graph, size of MVC = size of Max Matching
+
+"Erdős-Ginzburg-Ziv" theorem:
+From any set S of (2n - 1) integers, you can always choose a subset P of n integers, such that the sum of all integers in it is divisible by n." 
+
+"Bertrand-Chebyshev Theorem": There is always atleast one prime p lying in (n, 2n] for all n.
+
+"Erdos-Szekeres Theorem":
+In any array (assume that we have permutation of n distinct integers for simplicity), we must have atleast one of the following: 
+1. An increasing subsequence of length (>= sqrt(n)).
+2. A decreasing subsequence of length (>= sqrt(n)).
+
+Expected number of times pref max changes in randomly shuffled array is O(log(n))
 */
+
+---
+// Dynamic insertions in offline built data structures:
+/* Simply maintain one based for every bit in binary representation of total number of elements and merge updwards as number of elements
+ changes, note that you finally have to unite O(log(n)) query answers */
+
+---
+//Variable Length Bitsets:
+template <int len = 1>
+void solve(int n) {
+    if (n > len) {
+        solve<std::min(len*2, MAXLEN)>(n);
+        return;
+    }
+    // solution using bitset<len>
+}
+
+---
