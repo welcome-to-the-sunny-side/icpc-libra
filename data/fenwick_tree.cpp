@@ -3,22 +3,17 @@ class node_chan
 public:
     int v = 0;
 
-    inline void operator+=(node_chan &other)
-    {
-        v += other.v;
-    }
+    inline void operator+=(node_chan &other)    
+        {v += other.v;}
     inline bool operator<(node_chan &other)
-    {
-        return v < other.v;
-    }
+        {return v < other.v;}
 };
 template <typename T>
 class fenwick_tree_chan
 {
 public:
     vector<T> fenw;
-    int n;
-    int pw;
+    int n, pw;
 
     fenwick_tree_chan() : n(0) {}
     fenwick_tree_chan(int n) : n(n)
