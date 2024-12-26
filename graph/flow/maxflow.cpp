@@ -1,3 +1,36 @@
+/*
+## Constructor: 
+mf_graph<Cap> graph(int n)
+
+It creates a graph of `n` vertices and 00 edges. `Cap` is the type of the capacity.
+- `Cap` is `int` or `ll`
+
+## Flow:
+(1) Cap graph.flow(int s, int t);
+(2) Cap graph.flow(int s, int t, Cap flow_limit);
+
+- It augments the flow from s to t as much as possible. It returns the amount of the flow augmented.
+- You may call it multiple times.
+
+**Constraints**
+- s≠t
+- The answer should be in `Cap`.
+
+**Complexity**
+- O(min(n^(2/3).m, m^(3/2))) if all capacities are 1
+- O(n^2.m) in general
+where m is the number of added edges.
+
+## Min_cut:
+vector<bool> graph.min_cut(int s)
+
+It returns a vector of length n, such that the i-th element is `true` if and only if there is a directed path from s to i in the residual network. The returned vector corresponds to a s−t minimum cut after calling `flow(s, t)` exactly once without `flow_limit`.
+
+**Complexity**
+
+- O(n+m), where m is the number of added edges.
+*/
+
 namespace atcoder {
 
 template <class Cap> struct mf_graph {
