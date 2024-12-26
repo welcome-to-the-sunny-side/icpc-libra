@@ -114,7 +114,7 @@ for each w_i, its occurences can be split into new groups of the form (w_i, 1), 
 last might not be a power of two * w_i but thats okay. (for example (w_i, 12) splits to (w_i, 1) (2w_i, 1)
 , (4wi, 1), (5w_i, 1))
 
-now, the number of groups will be O(sqrt(C)) where C is the total sum, and each group will have occurences = 1
+now, the number of groups will be O(sqrt(C)) (not sqrt(C) log(C)!!!) where C is the total sum, and each group will have occurences = 1
 
 finally, just do the ((elements) * (sum))/32 bitset dp
 */
