@@ -1,12 +1,3 @@
-class element_chan
-{
-public:
-};
-class block_chan
-{
-public:
-};
-
 template<typename E, typename T, const int B>
 class block_decomposition_chan
 {
