@@ -16,24 +16,12 @@ class connectivity_chan
         cut-point and adding an edge from every cut-point to all the blocks it is a part of.
     */
 public:
-    int n;
-    vector<vector<int>> adj;
+    int n, a, m, b;
     int timer;
-    vector<int> tin, low;
-
-    vector<pair<int, int>> bridge;
-
-    int a;
+    vector<int> tin, low, block_node_id, cut_node_id;
+    vector<vector<int>> adj, bcc, bct_comp, bct, 
     vector<bool> cut;
-
-    int m;
-    vector<vector<int>> bcc;
-
-    int b;
-    vector<int> block_node_id;
-    vector<int> cut_node_id;
-    vector<vector<int>> bct_comp;    
-    vector<vector<int>> bct;
+    vector<pair<int, int>> bridge;
 
     connectivity_chan(const vector<vector<int>> &adj) : 
     n(adj.size()), m(n), adj(adj), timer(0), tin(n, -1), low(n, -1), cut(n), bcc(n), 
@@ -54,8 +42,7 @@ public:
             vis[u] = true;
             stk.push_back(u);
 
-            int ptimes = 0;
-            int children = 0;
+            int ptimes = 0, children = 0;
             for(auto v : adj[u])
             {
                 if(v == p)
