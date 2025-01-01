@@ -2,7 +2,8 @@
 - only need to modify the monoid functions
 - be sure to reroot tree to intended root before calling lca or similar, as there a lot of internal reroots
 - after calling access(v), T[v] will contain path from current root to v, and subtree of v when tree is rooted at current root
-- subtree aggregate queries require invertibility  
+- subtree aggregate queries require invertibility
+- subtree aggregate is T[v].self + T[v].vir (NOT T[v].sub!!!)  
 - for the updates, just pass a lambda like:
     lct.update(1, [&](auto &x) {x.self += 10;});
 */
@@ -14,7 +15,6 @@ struct splay_tree_chan
         int ch[2] = {0, 0}, p = 0;
         long long self = 0, path = 0; // Path aggregates
         long long sub = 0, vir = 0;   // Subtree aggregates
-        long long size = 1;
         bool flip = 0;                // Lazy tags
     };
     vector<monoid_chan> T;
@@ -37,7 +37,6 @@ struct splay_tree_chan
 
         T[x].path = T[l].path + T[x].self + T[r].path;
         T[x].sub = T[x].vir + T[l].sub + T[r].sub + T[x].self;
-        T[x].size = 1 + T[l].size + T[r].size;
     }
     //pull/remove subtree of v from virtual subtree of u
     void pull_virtual (int u, int v)
