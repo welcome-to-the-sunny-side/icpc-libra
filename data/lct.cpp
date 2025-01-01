@@ -164,4 +164,11 @@ struct link_cut_chan : splay_tree_chan
         upd(T[u]);
         pull(u);
     }
+
+    //check if u is ancestor of v when root is r
+    bool is_ancestor(int u, int v, int r)
+    {
+        reroot(r);
+        return (lca(u, v) == u);
+    }
 };
