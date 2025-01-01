@@ -1,13 +1,11 @@
-#include<bits/stdc++.h>
-using namespace std;
-
-#ifdef natural_selection
-#include "../libra/misc/dbg.h"
-#else
-#define debug(...)
-#define endl "\n"
-#endif
-
+/*
+- only need to modify the monoid functions
+- be sure to reroot tree to intended root before calling lca or similar, as there a lot of internal reroots
+- after calling access(v), T[v] will contain path from current root to v, and subtree of v when tree is rooted at current root
+- subtree aggregate queries require invertibility  
+- for the updates, just pass a lambda like:
+    lct.update(1, [&](auto &x) {x.self += 10;});
+*/
 struct splay_tree_chan
 {
     //monoid
@@ -16,6 +14,7 @@ struct splay_tree_chan
         int ch[2] = {0, 0}, p = 0;
         long long self = 0, path = 0; // Path aggregates
         long long sub = 0, vir = 0;   // Subtree aggregates
+        long long size = 1;
         bool flip = 0;                // Lazy tags
     };
     vector<monoid_chan> T;
@@ -26,6 +25,7 @@ struct splay_tree_chan
         int l = T[x].ch[0], r = T[x].ch[1];
 
         T[l].flip ^= 1, T[r].flip ^= 1;
+
         swap(T[x].ch[0], T[x].ch[1]);
         T[x].flip = 0;
     }
@@ -37,7 +37,9 @@ struct splay_tree_chan
 
         T[x].path = T[l].path + T[x].self + T[r].path;
         T[x].sub = T[x].vir + T[l].sub + T[r].sub + T[x].self;
+        T[x].size = 1 + T[l].size + T[r].size;
     }
+    //pull/remove subtree of v from virtual subtree of u
     void pull_virtual (int u, int v)
     {
         T[u].vir += T[v].sub;
@@ -62,8 +64,7 @@ struct splay_tree_chan
             int p = T[x].p;
             if (!p)
                 return -1;
-            return T[p].ch[0] == x ? 0 : T[p].ch[1] == x ? 1
-                                                         : -1;
+            return T[p].ch[0] == x ? 0 : T[p].ch[1] == x ? 1 : -1;
         };
         auto rotate = [&](int x)
         {
@@ -87,7 +88,6 @@ struct splay_tree_chan
         }
     }
 };
-
 struct link_cut_chan : splay_tree_chan
 {
     link_cut_chan(int n) : splay_tree_chan(n) {}
@@ -142,6 +142,7 @@ struct link_cut_chan : splay_tree_chan
     }
 
     // Query subtree of u where v is outside the subtree.
+    // The final answer is found by combining T[u].self and T[u].vir
     monoid_chan subtree(int u, int v)
     {
         reroot(v);
@@ -165,42 +166,3 @@ struct link_cut_chan : splay_tree_chan
         pull(u);
     }
 };
-
-signed main()
-{
-    ios_base::sync_with_stdio(false), cin.tie(NULL);
-
-    int n;
-    cin >> n;
-
-    link_cut_chan lct(n);
-
-    int m;
-    cin >> m;
-
-    for(int i = 0; i < m; i ++)
-    {
-        string q;
-        cin >> q;
-
-        if(q == "add")
-        {
-            int u, v;
-            cin >> u >> v;
-            lct.link(u, v);
-        }
-        else if(q == "rem")
-        {
-            int u, v;
-            cin >> u >> v;
-            lct.cut(u, v);
-        }
-        else
-        {
-            int u, v;
-            cout << (lct.lca(u, v) == 0 ? "YES" : "NO") << endl;
-        }
-    }
-}
-
-
