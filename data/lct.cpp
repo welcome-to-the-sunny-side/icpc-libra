@@ -2,11 +2,12 @@
 - only need to modify the monoid functions
 - be sure to reroot tree to intended root before calling lca or similar, as there a lot of internal reroots
 - after calling access(v), T[v] will contain path from current root to v, and subtree of v when tree is rooted at current root
-- subtree aggregate queries require invertibility
+- subtree aggregate queries require invertibility (although you could just use another bbst (multiset/treap) for non-invertible functions like max/gcd)
 - subtree aggregate is T[v].self + T[v].vir (NOT T[v].sub!!!)  
 - for the updates, just pass a lambda like:
     lct.update(1, [&](auto &x) {x.self += 10;});
 */
+
 struct splay_tree_chan
 {
     //monoid
