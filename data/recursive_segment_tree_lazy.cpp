@@ -58,6 +58,7 @@ public:
   };
   void propagate(int v, int l, int r) {
     if(tags[v].empty()) return;
+    if(l > r)   return;
     tags[v].apply_to(infos[v], l, r);
     if(l != r) {
       tags[v].apply_to(tags[2 * v]);
@@ -93,6 +94,7 @@ public:
     int ans = l - 1;
     bool found = false;
     auto recurse = [&](int v, int lb, int rb, auto &&recurse) -> void {
+        propagate(v, lb, rb);
         if(lb == rb) {
             if(f(sum.unite(infos[v]))) {
                 ans = l;
@@ -105,9 +107,10 @@ public:
 
         int m = (lb + rb)/2;
         if(lb <= l and l <= m) {
-            recurse(v * 2, lb, m);
+            recurse(v * 2, lb, m, recurse);
             if(found)
                 return;
+            propagate(2 * v + 1, m + 1, r);
             if(f(sum.unite(infos[2 * v + 1]))) {
                 ans = rb;
                 sum = sum.unite(infos[2 * v + 1]);
@@ -117,7 +120,16 @@ public:
                 auto dfs = [&](int v, int lb, int rb, auto &&dfs) -> void {
                     if(lb > rb)
                         return;
+                    propagate(v, lb, rb);
+                    if(lb == rb) {
+                        if(f(sum.unite(infos[v]))) {
+                            ans = rb;
+                            sum = sum.unite(infos[v]);
+                        }
+                        return;
+                    }
                     int m = (lb + rb)/2;
+                    propagate(2 * v, lb, m);
                     if(f(sum.unite(infos[2 * v]))) {
                         ans = m;
                         sum = sum.unite(infos[2 * v]);
@@ -130,9 +142,9 @@ public:
             }
         }
         else {
-            recurse(v * 2 + 1, m + 1, rb);
+            recurse(v * 2 + 1, m + 1, rb, recurse);
         }
-    }
+    };
     recurse(1, 0, n - 1, recurse);
     return ans;
   }
