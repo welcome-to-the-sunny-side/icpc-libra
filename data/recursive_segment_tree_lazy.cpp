@@ -1,8 +1,8 @@
 class monoid_chan {
 public:
-  int sum = 0;
+  int64_t sum = 0;
   monoid_chan() : sum(0) {};
-  monoid_chan(int x) : sum(x) {};
+  monoid_chan(int64_t x) : sum(x) {};
   monoid_chan unite(monoid_chan b) const {
     monoid_chan res(sum + b.sum);
     return res;
@@ -11,8 +11,8 @@ public:
 };
 class tag_chan {
 public:
-  int add = 0;
-  tag_chan() : add(0) {}; tag_chan(int x) : add(x) {};
+  int64_t add = 0;
+  tag_chan() : add(0) {}; tag_chan(int64_t x) : add(x) {};
   bool apply_to(monoid_chan &a, [[maybe_unused]] int l, [[maybe_unused]] int r) const {
     a.sum += add * (r - l + 1); return true;
   }
@@ -100,8 +100,10 @@ public:
                 ans = l;
                 sum = sum.unite(infos[v]);
             }
-            else
+            else {
+                found = true;
                 ans = l - 1; 
+            }
             return;
         }
 
@@ -110,7 +112,7 @@ public:
             recurse(v * 2, lb, m, recurse);
             if(found)
                 return;
-            propagate(2 * v + 1, m + 1, r);
+            propagate(2 * v + 1, m + 1, rb);
             if(f(sum.unite(infos[2 * v + 1]))) {
                 ans = rb;
                 sum = sum.unite(infos[2 * v + 1]);
