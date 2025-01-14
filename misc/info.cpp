@@ -11,7 +11,11 @@ b._Find_next(i)      //position of first set bit after i
 b.to_string();      //converts to string
 
 ---------------
-// multiset.count(x) is O(logn + occ(x)) !!!!!!
+//THINGS TO WATCH OUT FOR:
+// 1. multiset.count(x) is O(logn + occ(x)) !!!!!!
+// 2. v.clear() doesn’t free the vector’s memory so if you are doing a small to large trick the memory complexity would 
+// still be 𝑂(𝑛log𝑛) which might MLE in some cases. However v.clear(); v.shrink_to_fit(); frees its memory and makes the 
+// memory complexity 𝑂(𝑛) in this case.
 
 ---------------
 //Enumerating bitmasks:
@@ -195,6 +199,8 @@ In any array (assume that we have permutation of n distinct integers for simplic
 2. A decreasing subsequence of length (>= sqrt(n)).
 
 Expected number of times pref max changes in randomly shuffled array is O(log(n))
+
+"Four square theorem": Any non-negative integer can be expressed as the sum of 4 squares
 */
 
 ---
